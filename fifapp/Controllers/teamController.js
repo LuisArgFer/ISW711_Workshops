@@ -1,10 +1,9 @@
-
 const express = require('express');
 const router = express.Router();
 const Team = require('../Models/teamModel');
 
 // Get all teams
-router.get('/team', (req, res) => {
+router.get("/team", (req, res) => {
     Team.find({}, (error, teams) => {
         if (error) {
             return res.status(500).send(error);
@@ -14,7 +13,7 @@ router.get('/team', (req, res) => {
 });
 
 // Get a single team
-router.get('/team:id', (req, res) => {
+router.get("/team/:id", (req, res) => {
     Team.findById(req.params.id, (error, team) => {
         if (error) {
             return res.status(500).send(error);
@@ -27,7 +26,7 @@ router.get('/team:id', (req, res) => {
 });
 
 // Create a new team
-router.post('/team', (req, res) => {
+router.post("/team", (req, res) => {
     const newTeam = new Team(req.body);
     newTeam.save((error) => {
         if (error) {
@@ -38,8 +37,8 @@ router.post('/team', (req, res) => {
 });
 
 // Update a team
-router.put('/team:id', (req, res) => {
-    Team.findByIdAndUpdate(req.params.id, req.body, {new: true}, (error, team) => {
+router.put("/team/:id", (req, res) => {
+    Team.findByIdAndUpdate(req.params.id, req.body, { new: true }, (error, team) => {
         if (error) {
             return res.status(500).send(error);
         }
@@ -51,7 +50,7 @@ router.put('/team:id', (req, res) => {
 });
 
 // Delete a team
-router.delete('/team:id', (req, res) => {
+router.delete("/team/:id", (req, res) => {
     Team.findByIdAndRemove(req.params.id, (error, team) => {
         if (error) {
             return res.status(500).send(error);
@@ -62,5 +61,4 @@ router.delete('/team:id', (req, res) => {
         res.status(200).send('Team deleted successfully');
     });
 });
-module.exports=router;
-
+module.exports = router;

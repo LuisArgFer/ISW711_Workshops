@@ -20,12 +20,11 @@ export const typeDefs = `#graphql
   # clients can execute, along with the return type for each. In this
   # case, the "players" query returns an array of zero or more players (defined above).
   type Query {
-    players: [Player]
+    players (orden: String): [Player]
     player(id: String): Player
     playerByName(name: String, limit: Int): [Player]
-    playersSortedByName(sortOrder: String): [Player]
     teams: [Team]
-    teamsSortedByName(sortOrder: String): [Team]
+    teamsByName(name: String, orden: String): [Team] 
     version: String
   }
 `;

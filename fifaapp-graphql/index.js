@@ -12,7 +12,14 @@ const db = mongoose.connect("mongodb://127.0.0.1:27017/fifapp", { useNewUrlParse
 const resolvers = {
   Query: {
     players: async (parent, args, context, info) => {
-      return await getPlayers(args.sort);
+      let players = await getPlayers();
+      if(args.orden === 'ASC'){
+          players = players.sort((a,b) => a.first_name.localeCompare(b.first_name));
+      }else if (args.orden === 'DESC'){
+        
+        players = players.sort((a,b) => b.first_name.localeCompare(a.first_name));
+      }
+      return players;
     },
     player: async (parent, args, context, info) => {
       return await getPlayer(args.id);
@@ -23,13 +30,17 @@ const resolvers = {
     teams: async () => {
       return await getTeams();
     },
-    playersSortedByName: async (parent, args, context, info) => {
-      const sortOrder = args.sortOrder;
-      return await getPlayers(sortOrder);
-    },
-    teamsSortedByName: async (parent, args, context, info) => {
-      const sortOrder = args.sortOrder;
-      return await getTeams(sortOrder);
+    teamsByName: async (parent, args, context, info) => {
+      let teams = await getTeams();
+      if(args.name){
+        teams = teams.filter(team => team.name.toLowerCase().includes(args.name.toLowerCase()));
+      }
+      if(args.orden === 'ASC'){
+        teams = teams.sort((a,b) => a.name.localeCompare(b.name));
+      }else if(args.orden === 'DESC'){
+        teams = teams.sort((a,b) => b.name.localeCompare(a.name));
+      }
+      return teams;
     },
     version: () => "1.2"
   },

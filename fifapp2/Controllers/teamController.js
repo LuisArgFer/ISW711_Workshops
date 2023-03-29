@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const app = express();
 const Team = require('../Models/teamModel');
+
+
+
 
 // Get all teams
 router.get("/team", (req, res) => {

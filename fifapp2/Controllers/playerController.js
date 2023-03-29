@@ -13,9 +13,9 @@ router.get("/player", (req, res) => {
     });
 });
 
-
-router.get("/player/:id", (req, res) => {
-    Player.model.findById(req.params.id, (error, player) => {
+//({ name: 'john', age: { $gte: 18 } }).exec();
+router.get("/player/search", (req, res) => {
+    Player.model.find({name : req.query}, (error, player) => {
         if (error) {
             return res.status(500).send(error);
         }
